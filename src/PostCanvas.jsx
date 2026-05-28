@@ -3,8 +3,13 @@ import { THEMES } from './data'
 
 const F = { head: "'Space Grotesk', sans-serif", body: "'Inter', sans-serif" }
 
+// Logo — absolute top-right on every template
 const Logo = () => (
-  <img src={`${import.meta.env.BASE_URL}logo.png`} alt="layer1.studio" style={{ height: 52, width: 'auto', objectFit: 'contain' }} crossOrigin="anonymous" />
+  <div style={{ position:'absolute', top:52, right:60, zIndex:10 }}>
+    <img src={`${import.meta.env.BASE_URL}logo.png`} alt="layer1.studio"
+      style={{ height:90, width:'auto', objectFit:'contain', display:'block' }}
+      crossOrigin="anonymous" />
+  </div>
 )
 
 const Tagline = () => (
@@ -41,8 +46,8 @@ const BigHeadlinePost = forwardRef(function BigHeadlinePost({ headline, subtext,
         <div style={{ width:56, height:3, background:accent, margin:'40px auto 32px' }} />
         {subtext && <p style={{ fontSize:28, color:'#94A3B8', lineHeight:1.5, margin:0 }}>{subtext}</p>}
       </div>
-      <div style={{ position:'absolute', bottom:56, left:80, right:80, display:'flex', alignItems:'flex-end', justifyContent:'space-between' }}>
-        <Tagline /><Logo />
+      <div style={{ position:'absolute', bottom:56, left:80 }}>
+        <Tagline />
       </div>
     </div>
   )
@@ -65,7 +70,8 @@ const SplitPost = forwardRef(function SplitPost({ headline, subtext, bg, accent 
         </h1>
         {subtext && <p style={{ fontSize:24, color:'#94A3B8', lineHeight:1.55, maxWidth:520, margin:0 }}>{subtext}</p>}
       </div>
-      <div style={{ position:'absolute', bottom:56, right:80 }}><Logo /></div>
+      <Logo />
+      <div style={{ position:'absolute', bottom:56, left:80 }}><Tagline /></div>
     </div>
   )
 })
@@ -83,14 +89,14 @@ const QuotePost = forwardRef(function QuotePost({ headline, subtext, bg, accent 
           {headline || <span style={{ color:'rgba(255,255,255,0.12)' }}>Your quote here</span>}
         </h1>
       </div>
+      <Logo />
       {/* Rule + attribution */}
-      <div style={{ position:'absolute', bottom:160, left:80, right:80, display:'flex', flexDirection:'column', alignItems:'center', gap:28 }}>
+      <div style={{ position:'absolute', bottom:130, left:80, right:80, display:'flex', flexDirection:'column', alignItems:'center', gap:24 }}>
         <div style={{ width:120, height:2, background:accent }} />
         {subtext && <p style={{ fontSize:24, color:'#94A3B8', textAlign:'center', margin:0 }}>{subtext}</p>}
-        <Logo />
       </div>
-      <div style={{ position:'absolute', bottom:52, right:70 }}>
-        <span style={{ fontFamily:F.body, fontWeight:300, fontStyle:'italic', fontSize:17, color:'rgba(255,255,255,0.35)' }}>Digital foundations, built to last.</span>
+      <div style={{ position:'absolute', bottom:52, left:80 }}>
+        <Tagline />
       </div>
     </div>
   )
@@ -117,9 +123,7 @@ const StatPost = forwardRef(function StatPost({ headline, subtext, bg, accent },
           : <p style={{ fontSize:30, color:'rgba(255,255,255,0.12)', margin:0 }}>Supporting context appears here</p>
         }
       </div>
-      <div style={{ display:'flex', alignItems:'flex-end', justifyContent:'space-between' }}>
-        <Tagline /><Logo />
-      </div>
+      <div><Tagline /></div>
     </div>
   )
 })
@@ -131,6 +135,7 @@ const CTAPost = forwardRef(function CTAPost({ headline, subtext, cta, bg, accent
     <div ref={ref} style={{ width:1080, height:1080, background:bg, fontFamily:F.body, position:'relative', overflow:'hidden' }}>
       {/* Left border */}
       <div style={{ position:'absolute', left:0, top:0, bottom:0, width:6, background:`linear-gradient(to bottom,${accent},${accent}30)` }} />
+      <Logo />
       {/* Glow */}
       <div style={{ position:'absolute', top:-280, right:-280, width:680, height:680, borderRadius:'50%', background:`radial-gradient(circle,${accent}14 0%,transparent 70%)` }} />
       <div style={{ display:'flex', flexDirection:'column', height:'100%', padding:'80px 80px 0 90px' }}>
@@ -144,8 +149,8 @@ const CTAPost = forwardRef(function CTAPost({ headline, subtext, cta, bg, accent
             {cta || 'Book a call. Build with confidence.'}
           </p>
           {subtext && <p style={{ fontSize:26, color:'#94A3B8', lineHeight:1.5, margin:0, maxWidth:760 }}>{subtext}</p>}
-          <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginTop:48 }}>
-            <Tagline /><Logo />
+          <div style={{ marginTop:48 }}>
+            <Tagline />
           </div>
         </div>
       </div>
@@ -159,6 +164,7 @@ const StoryPost = forwardRef(function StoryPost({ headline, subtext, bg, accent 
   return (
     <div ref={ref} style={{ width:1080, height:1080, background:'#1A2332', fontFamily:F.body, position:'relative', overflow:'hidden', padding:'80px' }}>
       <div style={{ position:'absolute', inset:0, backgroundImage:`radial-gradient(${accent}0C 1px,transparent 1px)`, backgroundSize:'38px 38px' }} />
+      <Logo />
       <div style={{ position:'relative', zIndex:1, display:'flex', flexDirection:'column', height:'100%' }}>
         <div style={{ flex:1, display:'flex', flexDirection:'column', justifyContent:'center' }}>
           {/* Dot + headline */}
@@ -173,9 +179,7 @@ const StoryPost = forwardRef(function StoryPost({ headline, subtext, bg, accent 
             : <p style={{ fontSize:28, color:'rgba(255,255,255,0.1)', margin:0, paddingLeft:36 }}>Supporting text appears here</p>
           }
         </div>
-        <div style={{ display:'flex', alignItems:'flex-end', justifyContent:'space-between' }}>
-          <Tagline /><Logo />
-        </div>
+        <div><Tagline /></div>
       </div>
     </div>
   )
