@@ -39,6 +39,7 @@ const BigHeadlinePost = forwardRef(function BigHeadlinePost({ headline, subtext,
   return (
     <div ref={ref} style={{ width:1080, height:1080, background:bg, fontFamily:F.body, position:'relative', overflow:'hidden', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:'80px' }}>
       <div style={{ position:'absolute', inset:0, backgroundImage:`linear-gradient(${accent}06 1px,transparent 1px),linear-gradient(90deg,${accent}06 1px,transparent 1px)`, backgroundSize:'90px 90px' }} />
+      <Logo />
       <div style={{ position:'relative', zIndex:1, textAlign:'center', maxWidth:880 }}>
         <h1 style={{ fontFamily:F.head, fontWeight:700, fontSize:fs, color:'#fff', lineHeight:1.06, letterSpacing:'-0.025em', margin:0 }}>
           {headline || <span style={{ color:'rgba(255,255,255,0.12)' }}>Your headline here</span>}
@@ -108,6 +109,7 @@ const StatPost = forwardRef(function StatPost({ headline, subtext, bg, accent },
   const textColor = accent === '#FFFFFF' ? '#FFFFFF' : accent
   return (
     <div ref={ref} style={{ width:1080, height:1080, background:bg, fontFamily:F.body, position:'relative', overflow:'hidden', display:'flex', flexDirection:'column', padding:'80px' }}>
+      <Logo />
       {/* Top — accent headline */}
       <div style={{ flex:1, display:'flex', alignItems:'flex-end', paddingBottom:52 }}>
         <h1 style={{ fontFamily:F.head, fontWeight:700, fontSize:fs, color:textColor, lineHeight:1.06, letterSpacing:'-0.025em', margin:0, maxWidth:880 }}>
