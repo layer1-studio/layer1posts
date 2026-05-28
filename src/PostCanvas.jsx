@@ -3,10 +3,8 @@ import { THEMES } from './data'
 
 const F = { head: "'Space Grotesk', sans-serif", body: "'Inter', sans-serif" }
 
-const Logo = ({ accent }) => (
-  <div style={{ fontFamily: F.head, fontWeight: 700, fontSize: 28, letterSpacing: '-0.02em', lineHeight: 1 }}>
-    <span style={{ color: '#fff' }}>layer1</span><span style={{ color: accent }}>.studio</span>
-  </div>
+const Logo = () => (
+  <img src={`${import.meta.env.BASE_URL}logo.png`} alt="layer1.studio" style={{ height: 52, width: 'auto', objectFit: 'contain' }} crossOrigin="anonymous" />
 )
 
 const Tagline = () => (
@@ -44,7 +42,7 @@ const BigHeadlinePost = forwardRef(function BigHeadlinePost({ headline, subtext,
         {subtext && <p style={{ fontSize:28, color:'#94A3B8', lineHeight:1.5, margin:0 }}>{subtext}</p>}
       </div>
       <div style={{ position:'absolute', bottom:56, left:80, right:80, display:'flex', alignItems:'flex-end', justifyContent:'space-between' }}>
-        <Tagline /><Logo accent={accent} />
+        <Tagline /><Logo />
       </div>
     </div>
   )
@@ -67,7 +65,7 @@ const SplitPost = forwardRef(function SplitPost({ headline, subtext, bg, accent 
         </h1>
         {subtext && <p style={{ fontSize:24, color:'#94A3B8', lineHeight:1.55, maxWidth:520, margin:0 }}>{subtext}</p>}
       </div>
-      <div style={{ position:'absolute', bottom:56, right:80 }}><Logo accent={accent} /></div>
+      <div style={{ position:'absolute', bottom:56, right:80 }}><Logo /></div>
     </div>
   )
 })
@@ -89,9 +87,7 @@ const QuotePost = forwardRef(function QuotePost({ headline, subtext, bg, accent 
       <div style={{ position:'absolute', bottom:160, left:80, right:80, display:'flex', flexDirection:'column', alignItems:'center', gap:28 }}>
         <div style={{ width:120, height:2, background:accent }} />
         {subtext && <p style={{ fontSize:24, color:'#94A3B8', textAlign:'center', margin:0 }}>{subtext}</p>}
-        <div style={{ fontFamily:F.head, fontWeight:700, fontSize:26 }}>
-          <span style={{ color:'#fff' }}>layer1</span><span style={{ color:accent }}>.studio</span>
-        </div>
+        <Logo />
       </div>
       <div style={{ position:'absolute', bottom:52, right:70 }}>
         <span style={{ fontFamily:F.body, fontWeight:300, fontStyle:'italic', fontSize:17, color:'rgba(255,255,255,0.35)' }}>Digital foundations, built to last.</span>
@@ -122,7 +118,7 @@ const StatPost = forwardRef(function StatPost({ headline, subtext, bg, accent },
         }
       </div>
       <div style={{ display:'flex', alignItems:'flex-end', justifyContent:'space-between' }}>
-        <Tagline /><Logo accent={accent} />
+        <Tagline /><Logo />
       </div>
     </div>
   )
@@ -149,7 +145,7 @@ const CTAPost = forwardRef(function CTAPost({ headline, subtext, cta, bg, accent
           </p>
           {subtext && <p style={{ fontSize:26, color:'#94A3B8', lineHeight:1.5, margin:0, maxWidth:760 }}>{subtext}</p>}
           <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginTop:48 }}>
-            <Tagline /><Logo accent={accent} />
+            <Tagline /><Logo />
           </div>
         </div>
       </div>
@@ -178,7 +174,7 @@ const StoryPost = forwardRef(function StoryPost({ headline, subtext, bg, accent 
           }
         </div>
         <div style={{ display:'flex', alignItems:'flex-end', justifyContent:'space-between' }}>
-          <Tagline /><Logo accent={accent} />
+          <Tagline /><Logo />
         </div>
       </div>
     </div>
