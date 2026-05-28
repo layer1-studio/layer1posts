@@ -6,8 +6,8 @@ import { THEMES, TEMPLATE_LABELS, ALL_POSTS } from './data'
 const THEME_KEYS = Object.keys(THEMES)
 const TEMPLATE_KEYS = Object.keys(TEMPLATE_LABELS)
 
-// ─── Scaled preview ──────────────────────────────────────────────────────────
-function ScaledCanvas({ canvasRef, template, theme, headline, subtext, cta }) {
+// ─── Scaled preview (display only — no ref, no capture) ─────────────────────
+function ScaledCanvas({ template, theme, headline, subtext, cta }) {
   const outer = useRef(null)
   const [scale, setScale] = useState(0.46)
   useEffect(() => {
@@ -20,7 +20,7 @@ function ScaledCanvas({ canvasRef, template, theme, headline, subtext, cta }) {
   return (
     <div ref={outer} style={{ width:'100%', height:'100%', position:'relative', overflow:'hidden', borderRadius:8 }}>
       <div style={{ width:1080, height:1080, transform:`scale(${scale})`, transformOrigin:'top left', position:'absolute' }}>
-        <PostCanvas ref={canvasRef} template={template} theme={theme} headline={headline} subtext={subtext} cta={cta} />
+        <PostCanvas template={template} theme={theme} headline={headline} subtext={subtext} cta={cta} />
       </div>
     </div>
   )
@@ -54,7 +54,7 @@ export default function App() {
   const [caption, setCaption] = useState('')
   const [copied, setCopied] = useState(false)
   const [downloading, setDownloading] = useState(false)
-  const canvasRef = useRef(null)
+  const exportRef = useRef(null)
   // Bulk
   const [bulkJson, setBulkJson] = useState(() => JSON.stringify(ALL_POSTS, null, 2))
   const [loadedPosts, setLoadedPosts] = useState(ALL_POSTS)
@@ -70,11 +70,11 @@ export default function App() {
   }
 
   async function downloadSingle() {
-    if (!canvasRef.current) return
+    if (!exportRef.current) return
     setDownloading(true)
     try {
       await document.fonts.ready
-      const cv = await html2canvas(canvasRef.current, { width:1080, height:1080, scale:1, useCORS:true, backgroundColor:null, logging:false })
+      const cv = await html2canvas(exportRef.current, { width:1080, height:1080, scale:1, useCORS:true, backgroundColor:null, logging:false })
       dl(cv.toDataURL('image/png'), `layer1-post-${Date.now()}.png`)
     } finally { setDownloading(false) }
   }
@@ -113,6 +113,11 @@ export default function App() {
 
   return (
     <div style={{ minHeight:'100vh', background:'#0D1117', color:'#fff', fontFamily:"'Inter',sans-serif" }}>
+      {/* Hidden single export canvas — full size, no transform, used for PNG capture */}
+      <div style={{ position:'fixed', left:-9999, top:-9999, width:1080, height:1080, zIndex:-1, pointerEvents:'none' }}>
+        <PostCanvas ref={exportRef} template={template} theme={theme} headline={headline} subtext={subtext} cta={cta} />
+      </div>
+
       {/* Hidden bulk canvas */}
       {activeBulkPost && (
         <div style={{ position:'fixed', left:-9999, top:-9999, width:1080, height:1080, zIndex:-1, pointerEvents:'none' }}>
@@ -169,7 +174,7 @@ export default function App() {
           <div style={{ flex:1, minWidth:280, display:'flex', flexDirection:'column', gap:14 }}>
             <p style={lbl}>Preview <span style={{ color:'#4a5568' }}>(1080×1080px)</span></p>
             <div style={{ width:'100%', maxWidth:520, aspectRatio:'1/1', margin:'0 auto', position:'relative' }}>
-              <ScaledCanvas canvasRef={canvasRef} template={template} theme={theme} headline={headline} subtext={subtext} cta={cta} />
+              <ScaledCanvas template={template} theme={theme} headline={headline} subtext={subtext} cta={cta} />
             </div>
             <div style={{ display:'flex', gap:10, maxWidth:520, margin:'0 auto', width:'100%' }}>
               <button onClick={downloadSingle} disabled={downloading} style={primaryBtn}>{downloading ? 'Exporting…' : 'Download PNG'}</button>
